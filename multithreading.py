@@ -45,7 +45,7 @@ def recorrer_canales(canal, carpeta_descarga, registro_path):
 def main(num_hilos):
     carpeta_descarga = 'download_videos'
     os.makedirs(carpeta_descarga, exist_ok=True)
-    registro_path = 'registroMultithreading.txt'
+    registro_path = 'registro_de_Multithreading.txt'
 
     current_date_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     with open(registro_path, 'a') as registro_file:
