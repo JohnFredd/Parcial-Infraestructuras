@@ -2,8 +2,8 @@ import yt_dlp
 import os
 
 class Downloader:
-    def __init__(self):
-        self.downloader = yt_dlp.YoutubeDL({'outtmpl': os.path.join("/videos/", '%(title)s.%(ext)s')})
+    def __init__(self, channel):
+        self.downloader = yt_dlp.YoutubeDL({'outtmpl': os.path.join("/videos/", channel, '%(title)s.%(ext)s')})
 
     def downloadVideo(self, video_url):
         try:

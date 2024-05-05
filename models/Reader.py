@@ -26,27 +26,35 @@ class Reader():
 
 	def extractChannelInformation(self, channelUrl):
 		ydl_opts = {
-			'extract_flat': True,
 			'quiet': True,
-			'skip_info': True,
+			'extract_flat': True,
+			'force_generic_extractor': True,
+			'force_single_feed': True,
+			'skip_download': True,
+			'nocheckcertificate': True,
+			'no_warnings': True,
+			'ignoreerrors': True,
+			'dump_single_json': True,
+			'simulate': True,
+			'youtube_include_dash_manifest': False,
+			'youtube_include_hls_manifest': False,
+			'extract_flat': True,
+			'extractor_args': {'youtube': {'extract_flat': True}},
+			'get_description': False,
+			'get_thumbnail': False,
+			'get_duration': False,
+			'get_view_count': False,
+			'get_like_count': False,
+			'get_dislike_count': False,
+			'get_average_rating': False,
+			'get_categories': False,
+			'get_tags': False,
+			'playlist_items': '1-5'
 		}
 		with yt_dlp.YoutubeDL(ydl_opts) as ydl:
 			info = ydl.extract_info(channelUrl, download=False)
-			channelName = info.get('uploader', '')
-			recentVideos = self.extractRecentVideos(channelUrl)
+			channelName = info['uploader']
+			recentVideos = []
+			for entry in info['entries'][0]['entries']:
+				recentVideos.append(entry['url'])
 		return channelName, recentVideos
-	
-	def extractRecentVideos(self, channelUrl):
-		ydl_opts = {
-			'extract_flat': True,
-			'quiet': True,
-			'max_entries': 5,
-		}
-		with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-			info = ydl.extract_info(channelUrl, download=False)
-			print(info)
-			if 'entries' in info:
-				recentVideos = [entry['url'] for entry in info['entries']]
-				return recentVideos
-			else:
-				return None
