@@ -14,17 +14,17 @@ channels = reader.readJson()
 register = 'RegistroMultiprocessing.txt'
 currentDateTime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
-with open(register, 'a') as registerFile:
-	registerFile.write(f"\nMultiprocessing - Fecha y hora de la ejecución: {currentDateTime}\n\n")
-
 def work(channel, root, title, register, semaphore):
 	with semaphore:
 		downloader = Downloader(channel, title, register)
 		converter.convert(downloader.downloadVideo(root))
 
 if __name__ == "__main__":
+	with open(register, 'a') as registerFile:
+		registerFile.write(f"\nMultiprocessing - Fecha y hora de la ejecución: {currentDateTime}\n\n")
+		
 	processes = []
-	maxProcesses = 4
+	maxProcesses = 8
 	semaphore = multiprocessing.Semaphore(maxProcesses)
 
 	for urls in channels:

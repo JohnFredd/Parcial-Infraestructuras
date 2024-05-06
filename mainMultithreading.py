@@ -18,7 +18,7 @@ with open(register, 'a') as registerFile:
 	registerFile.write(f"\nMultithreading - Fecha y hora de la ejecución: {currentDateTime}\n\n")
 
 threads = []
-maxThreads = 4
+maxThreads = 8
 semaphore = threading.Semaphore(maxThreads)
 
 def work(channel, root, title, register):
