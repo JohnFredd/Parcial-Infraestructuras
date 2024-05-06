@@ -1,5 +1,6 @@
 import json
 import yt_dlp
+import re
 
 class Reader():
 	def readJson(self, fileName = "static/channels.json"):
@@ -56,5 +57,10 @@ class Reader():
 			channelName = info['uploader']
 			recentVideos = []
 			for entry in info['entries'][0]['entries']:
-				recentVideos.append(entry['url'])
+				recentVideos.append([entry['url'], self.cleanFilename(entry['title'])])
 		return channelName, recentVideos
+	
+	def cleanFilename(self, filename):
+		cleanedFilename = re.sub(r'[^\w\s-]', '', filename)
+
+		return cleanedFilename
